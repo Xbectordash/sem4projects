@@ -7,20 +7,26 @@ public class HealthScript : MonoBehaviour
     public float health = 100f;
 
     private characterAnimation animationScript;
-    private Enemyattack enemyMovement;
+    private EnemyMovement enemyMovement;
 
     private bool characterDied ;
     public bool is_Player;
-    // Start is called before the first frame update
+
+    private HealthUI health_UI;
     void Awake()
     {
         animationScript = GetComponentInChildren<characterAnimation>();
+        if(is_Player ) { health_UI = GetComponent<HealthUI>(); }
+       
     }
     public void ApplyDamage(float damage, bool knockDown)
     {
         if (characterDied)
             return;
         health -= damage;
+
+       //   Display health_UI
+       health_UI.DisplayHealth(health);
 
         if (health <= 0f)
         {
@@ -29,7 +35,8 @@ public class HealthScript : MonoBehaviour
 
             if(is_Player)
             {
-
+              GameObject.FindWithTag(Tags.ENEMY_TAG)
+                    .GetComponent<EnemyMovement>().enabled = false;
             }
             return;
              

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemyattack : MonoBehaviour
+public class EnemyMovement: MonoBehaviour
 {
     private characterAnimation enemyAnim;
     private Rigidbody myBody;
@@ -17,7 +17,7 @@ public class Enemyattack : MonoBehaviour
 
     private bool followPlayer, attackPlayer;
 
-    private void Awake()
+     void Awake()
     {
         enemyAnim = GetComponentInChildren<characterAnimation>();
         myBody = GetComponent<Rigidbody>();
@@ -73,6 +73,7 @@ public class Enemyattack : MonoBehaviour
         if (!attackPlayer)
             return;
         current_Attack_Time += Time.deltaTime;
+
         if(current_Attack_Time > default_Attack_Time)
         {
             enemyAnim.EnemyAttack(Random.Range(0, 3));
@@ -82,6 +83,8 @@ public class Enemyattack : MonoBehaviour
         if(Vector3.Distance(transform.position, playerTarget.position) >
             attack_Distance + chase_Player_After_Attack)
         {
+           // enemyAnim.Walk(true);     // extra code for experiment
+
             attackPlayer = false;
             followPlayer = true;
         }
